@@ -5,13 +5,26 @@
 
 int main(){
     int level;
-    char ch;
+    char action;
     int row, col;
     int dir;
+    int *x, *y;
 
     init_display(0);
-    row = col = 0;
-
-    while(ch != 'q'){ 
-        show_mouse(dir, row, col);
+    dir = row = col = 0;
+    x = &col;
+    y = &row;
+    show_mouse(dir, *y, *x);
+    action =  getchar();
+    show_position(*y, *x);
+    while(action != 'q'){ 
+        dir = determine_direction(dir, action);
+        if(action == 'w'){
+            move_direction(dir, x, y);
+        }
+        show_mouse(dir, *y, *x);
+        show_position(*y, *x);
+        action = getchar();
+    }
+    clear_screen();
 }
